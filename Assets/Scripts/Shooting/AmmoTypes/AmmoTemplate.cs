@@ -26,12 +26,12 @@ public abstract class AmmoTemplate : MonoBehaviour
     /// <code>
     /// if (_nextFire &gt; time) return;
     /// 
-    /// _nextFire = time + ammoData.fireRate / fireRateMult;
+    ///   _nextFire = time + ammoData.fireRate / fireRateMult;
     /// 
     ///    GameObject go = Instantiate(bulletPrefab);
-    /// go.transform.position = turetPos;
+    ///   go.transform.position = turetPos;
     ///   Bullet _bullet = go.GetComponent&lt;Bullet&gt;();
-    ///_bullet.SetSpeed(ammoData.speed* speedMult);
+    ///   _bullet.SetSpeed(ammoData.speed* speedMult);
     ///   _bullet.SetDirection(0);
     ///   _bullet.SetDamage(ammoData.damage* damageMult);
     /// </code>

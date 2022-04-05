@@ -7,16 +7,14 @@ public class MeteorScript : EnemyTemplate
     public static event EventManager.AddAmmoToPlayerAction AddAmmoToPlayer;
 
     public GameObject meteorPiecesPrefab;
-    public GameObject loot;
+    private AmmoTemplate _loot;
 
     private GameObject _sceneManager;
-    
-
-       
+         
     private void Awake()
     {
-        //_sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
-        //loot = _sceneManager.GetComponent<SceneManagerScript>().GetRandomAmmo();
+        _sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
+        //_loot = _sceneManager.GetComponent<SceneManagerScript>().GetRandomAmmo();
         curentHealth = enemyStats.health;
     }
 
@@ -49,7 +47,8 @@ public class MeteorScript : EnemyTemplate
     {
         GameObject meteorPiecesGO = Instantiate(meteorPiecesPrefab);
         meteorPiecesGO.transform.position = gameObject.transform.position;
-        AddAmmoToPlayer(loot);
+
+        if (_loot != null) { AddAmmoToPlayer(_loot); }
 
         Destroy(gameObject);
     }
@@ -58,5 +57,14 @@ public class MeteorScript : EnemyTemplate
     private void Move()
     {
         transform.position = new Vector2(gameObject.transform.position.x - enemyStats.speed * Time.deltaTime, transform.position.y);
+    }
+
+
+    public AmmoTemplate Loot
+    {
+        set
+        {
+            _loot = value;
+        }
     }
 }
