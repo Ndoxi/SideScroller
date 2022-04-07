@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour
 {
+<<<<<<< HEAD
     [Header("List of enemys for curent level")]
     public EnemyList enemyList;
 
@@ -124,4 +125,7 @@ public class SpawnerScript : MonoBehaviour
 
 
 
+=======
+    public EnemyList enemyList;
+>>>>>>> 69012060979c0cf64be412245d72ab7e5f5a0227
 }

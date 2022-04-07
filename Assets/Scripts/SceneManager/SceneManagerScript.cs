@@ -33,11 +33,15 @@ public class SceneManagerScript : MonoBehaviour
     }
 
 
-    public GameObject GetRandomAmmo()
-    {
-        int ammoNumber = allAmmoData.ammoForCurentLevel.Count;
-        GameObject randomAmmo = allAmmoData.ammoForCurentLevel[Random.Range(0, ammoNumber)];
+    /// <summary>
+    /// Chouse ramdom ammo
+    /// </summary>
+    /// <returns></returns>
+    //public GameObject GetRandomAmmo()
+    //{
+    //    int ammoNumber = allAmmoData.allAmmo.Count;      
+    //    GameObject randomAmmo = allAmmoData.allAmmo[Random.Range(0, ammoNumber)].bulletPrefab;
 
-        return randomAmmo;
-    }
+    //    return randomAmmo;
+    //}
 }

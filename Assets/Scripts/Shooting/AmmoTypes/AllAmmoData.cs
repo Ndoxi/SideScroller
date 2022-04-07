@@ -6,5 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameStructs/AmmoForCurentLevel")]
 public class AllAmmoData : ScriptableObject
 {
-    public List<GameObject> ammoForCurentLevel;
+    [Header("Ammo data and bullet prefab")]
+    public List<Ammo> ammoList;
 }

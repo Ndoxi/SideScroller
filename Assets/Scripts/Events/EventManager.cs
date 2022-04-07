@@ -19,5 +19,5 @@ public class EventManager : MonoBehaviour
     /// <summary>
     /// Add ammo to player
     /// </summary>
-    public delegate void AddAmmoToPlayerAction(GameObject ammo);
+    public delegate void AddAmmoToPlayerAction(AmmoTemplate ammo);
 }
