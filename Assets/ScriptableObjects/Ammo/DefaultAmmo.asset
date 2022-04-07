@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DefaultAmmo
   m_EditorClassIdentifier: 
   damage: 10
-  speed: 12
+  speed: 16
   fireRate: 0.5

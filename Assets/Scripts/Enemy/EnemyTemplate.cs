@@ -22,6 +22,21 @@ public abstract class EnemyTemplate : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Player")) { return; }
+
+        PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
+        playerScript.TakeDamage(enemyStats.damage);
+    }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        OnTriggerEnter2D(collision);
+    }
+
+
     /// <summary>
     /// Call this method when object health &lt;= 0
     /// </summary>

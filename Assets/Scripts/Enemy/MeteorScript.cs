@@ -7,12 +7,11 @@ public class MeteorScript : EnemyTemplate
     public static event EventManager.AddAmmoToPlayerAction AddAmmoToPlayer;
 
     public GameObject meteorPiecesPrefab;
-    public GameObject loot;
+    public GameObject loot { set; get; }
 
     private GameObject _sceneManager;
     
-
-       
+   
     private void Awake()
     {
         //_sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
@@ -47,11 +46,12 @@ public class MeteorScript : EnemyTemplate
     /// </summary>
     public override void Death()
     {
+        Destroy(gameObject);
         GameObject meteorPiecesGO = Instantiate(meteorPiecesPrefab);
         meteorPiecesGO.transform.position = gameObject.transform.position;
-        AddAmmoToPlayer(loot);
 
-        Destroy(gameObject);
+        if (loot != null) { AddAmmoToPlayer(loot); }
+        Destroy(meteorPiecesGO, 2f);
     }
 
 

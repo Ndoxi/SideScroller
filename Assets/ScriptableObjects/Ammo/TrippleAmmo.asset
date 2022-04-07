@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TrippleAmmo
   m_EditorClassIdentifier: 
   damage: 7
-  speed: 12
+  speed: 15
   fireRate: 0.3

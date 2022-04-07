@@ -81,6 +81,7 @@ public class ShootingSystem : MonoBehaviour
         return _allAmmo.Peek();
     }
 
+
     /// <summary>
     /// Add ammo in <b>allAmmo</b> stack
     /// </summary>
@@ -89,6 +90,7 @@ public class ShootingSystem : MonoBehaviour
     {
         _allAmmo.Push(ammoData);
     }
+
 
     /// <summary>
     /// Gets last loaded ammo and removes it from stack.

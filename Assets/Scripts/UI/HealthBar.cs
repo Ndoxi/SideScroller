@@ -24,6 +24,7 @@ public class HealthBar : MonoBehaviour
     private float _maxAlphaValue = 1f;
 
     private GameObject _player;
+    private CanvasGroup _healthbarCanvasGroup;
     private Slider _slider;
     private Image _healthBarFillImage;
 
@@ -31,6 +32,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         PlayerScript.PlayerTakeDamage += PlayerTakesDamage;
+         _healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
     }
 
 
@@ -105,8 +107,7 @@ public class HealthBar : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) { return; }
 
-        CanvasGroup healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
-        healthbarCanvasGroup.alpha = _minAlphaValue;
+        _healthbarCanvasGroup.alpha = _minAlphaValue;
     }
 
 
@@ -114,7 +115,6 @@ public class HealthBar : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) { return; }
 
-        CanvasGroup healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
-        healthbarCanvasGroup.alpha = _maxAlphaValue;
+        _healthbarCanvasGroup.alpha = _maxAlphaValue;
     }
 }

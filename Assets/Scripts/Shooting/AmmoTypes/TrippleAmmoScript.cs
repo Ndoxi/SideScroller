@@ -24,5 +24,10 @@ public class TrippleAmmoScript : AmmoTemplate
         bullet3.transform.position = turetPos;
         Bullet bulletScipt3 = bullet3.GetComponent<Bullet>();
         bulletScipt3.SetBuletParams(ammoData.damage * damageMult, ammoData.speed * speedMult, -33, -33);
+
+        //bullets lifetime
+        Destroy(bullet1, 0.6f);
+        Destroy(bullet2, 0.6f);
+        Destroy(bullet3, 0.6f);
     }
 }
