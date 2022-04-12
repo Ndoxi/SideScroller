@@ -10,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public abstract class AmmoTemplate : MonoBehaviour
 {
+    public static event EventManager.PlayerShootAction PlayerShoot;
+
     [Header("Information about ammo")]
     public GameObject bulletPrefab;
     public AmmoData ammoData;
@@ -52,4 +54,12 @@ public abstract class AmmoTemplate : MonoBehaviour
     /// </code>
     /// </remarks>
     public abstract void ShootBullet(Vector2 turetPos, float time, int damageMult = 1, float speedMult = 1, float fireRateMult = 1);
+
+    /// <summary>
+    /// Fire shoot ammo event
+    /// </summary>
+    public void ShootEvent()
+    {
+        PlayerShoot();
+    }
 }

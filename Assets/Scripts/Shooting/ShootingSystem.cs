@@ -33,22 +33,22 @@ using UnityEngine;
 /// </summary>
 public class ShootingSystem : MonoBehaviour
 {
+    public static event EventManager.PickupPowerUpAction PlayerPickUpPowerUp;
+
     [Header("Turret object and default ammo")]
     public GameObject turretGO;
-    public GameObject defaultBulletPrefab;
-    public AmmoData defaultAmmoData;
+    public GameObject defaultAmmo;
 
-    private AmmoTemplate _defaultAmmo;
-    private AmmoTemplate _curentAmmo;
-    private Stack<AmmoTemplate> _allAmmo = new Stack<AmmoTemplate>();
+    private GameObject _curentAmmo;
+    private AmmoTemplate _curentAmmoScript;
+    private Stack<GameObject> _allAmmo = new Stack<GameObject>();
     private Vector2 _turretPos = Vector2.zero;
 
 
     private void Awake()
     {
-        _defaultAmmo = new DefaultAmmoScript(defaultBulletPrefab, defaultAmmoData);
-        AddAmmoData(_defaultAmmo);
-        LoadNewAmmo(ReadAmmoData());
+        AddAmmoData(defaultAmmo);
+        LoadNewAmmo(defaultAmmo);
 
         MeteorScript.AddAmmoToPlayer += LoadNewAmmo;
     }
@@ -68,17 +68,17 @@ public class ShootingSystem : MonoBehaviour
     /// </remarks>
     public void ShootAmmo()
     {
-        if (_allAmmo is null) return;
+        if (_curentAmmoScript is null) return;
 
         _turretPos = turretGO.transform.position;
-        _curentAmmo.ShootBullet(_turretPos, Time.time);
+        _curentAmmoScript.ShootBullet(_turretPos, Time.time);
     }
 
     /// <summary>
     /// Gets last loaded ammo without removing it from stack.
     /// </summary>
     /// <returns>Last loaded ammo.</returns>
-    public AmmoTemplate ReadAmmoData()
+    public GameObject ReadAmmoData()
     {    
         return _allAmmo.Peek();
     }
@@ -88,7 +88,7 @@ public class ShootingSystem : MonoBehaviour
     /// Add ammo in <b>allAmmo</b> stack
     /// </summary>
     /// <param name="ammoData">Ammo wich will be added to stack</param>
-    public void AddAmmoData(AmmoTemplate ammoData)
+    public void AddAmmoData(GameObject ammoData)
     {
         _allAmmo.Push(ammoData);
     }
@@ -101,7 +101,7 @@ public class ShootingSystem : MonoBehaviour
     /// <remarks>
     /// If stack has only 1 ammo left - method gets ammo without removing it.
     /// </remarks>
-    public AmmoTemplate GetAmmoData()
+    public GameObject GetAmmoData()
     {
         if (_allAmmo.Count == 1) return _allAmmo.Peek();
 
@@ -113,9 +113,27 @@ public class ShootingSystem : MonoBehaviour
     /// Loads new ammo for shooting.
     /// </summary>
     /// <param name="newAmmo">New ammo for shooting</param>
-    public void LoadNewAmmo(AmmoTemplate newAmmo)
+    public void LoadNewAmmo(GameObject newAmmo)
     {
-        AddAmmoData(newAmmo);
-        _curentAmmo = newAmmo;
+        if (_curentAmmo != null) { Destroy(_curentAmmo); }
+
+        _curentAmmo = Instantiate(newAmmo);
+        _curentAmmoScript = _curentAmmo.GetComponent<AmmoTemplate>();
+
+        PlayerPickUpPowerUp();
+    }
+
+
+    /// <summary>
+    /// Load ammo from ammo stack
+    /// </summary>
+    public void LoadNewAmmo()
+    {
+        if (_curentAmmo != null) { Destroy(_curentAmmo); }
+
+        _curentAmmo = Instantiate(ReadAmmoData());
+        _curentAmmoScript = _curentAmmo.GetComponent<AmmoTemplate>();
+
+        PlayerPickUpPowerUp();
     }
 }

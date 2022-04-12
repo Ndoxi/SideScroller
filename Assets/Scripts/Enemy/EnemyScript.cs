@@ -16,7 +16,7 @@ public class EnemyScript : EnemyTemplate
 
     //AI
     private GameObject _playerGO;
-    private float _distanceToPlayer; 
+    private float _distanceToPlayer = 0; 
     
 
     private void Awake()
@@ -35,9 +35,11 @@ public class EnemyScript : EnemyTemplate
 
     private void Update()
     {
-        if (CalculateDoctanceToPlayer() <= _aggroRange) { _isAggro = true; }
+        CalculateDoctanceToPlayer();
 
-        if (_isAggro)
+        if (_distanceToPlayer <= _aggroRange) { _isAggro = true; }
+
+        if (_isAggro && _playerGO != null)
         {
             ChacePlayer();
         } else
@@ -53,10 +55,11 @@ public class EnemyScript : EnemyTemplate
     }
 
 
-    private float CalculateDoctanceToPlayer()
+    private void CalculateDoctanceToPlayer()
     {
-        float distance = Vector2.Distance(transform.position, _playerGO.transform.position);
-        return distance;
+        if (_playerGO == null) { return; }
+
+        _distanceToPlayer = Vector2.Distance(transform.position, _playerGO.transform.position);
     }
 
 
@@ -71,6 +74,7 @@ public class EnemyScript : EnemyTemplate
 
     private void ChacePlayer()
     {
+        if (_playerGO == null) { return; }
         transform.position = Vector2.MoveTowards(transform.position, 
             _playerGO.transform.position, enemyStats.speed * 1.5f * Time.deltaTime);
     }

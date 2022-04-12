@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TrippleAmmoScript : AmmoTemplate
 {
+    private void Awake()
+    {
+        _nextFire = 0;
+    }
+
+
     public TrippleAmmoScript(GameObject bulletPrefab, AmmoData ammoData)
     {
         this.bulletPrefab = bulletPrefab;
@@ -36,5 +42,7 @@ public class TrippleAmmoScript : AmmoTemplate
         Destroy(bullet1, 0.6f);
         Destroy(bullet2, 0.6f);
         Destroy(bullet3, 0.6f);
+
+        ShootEvent();
     }
 }

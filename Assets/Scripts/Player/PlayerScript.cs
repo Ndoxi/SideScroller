@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour, IHealth
-{ 
+{
+    /// <summary>
+    /// Player get hit
+    /// </summary>
+    public static event EventManager.PlayerGetHitAction PlayerGetHit;
+
     /// <summary>
     /// Player takes damage
     /// </summary>
@@ -28,20 +33,6 @@ public class PlayerScript : MonoBehaviour, IHealth
         _maxHealth = rocketStats.health;
         _curentHealth = _maxHealth;
     }
-
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (!collision.gameObject.CompareTag("Enemy")) { return; }
-
-    //    TakeDamage(15);
-    //}
-
-
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    OnTriggerEnter2D(collision);
-    //}
 
 
     /// <summary>
@@ -78,6 +69,7 @@ public class PlayerScript : MonoBehaviour, IHealth
     {
         if (_isInvincible) { return; }
 
+        PlayerGetHit();
         PlayerTakeDamage(damage);
         _curentHealth -= damage;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class EnemyTemplate : MonoBehaviour
 {
+    public static event EventManager.EnemyKilledAction enemyKilled;
     public EnemyStats enemyStats;
 
     [HideInInspector] public int maxHealth;
@@ -18,7 +19,11 @@ public abstract class EnemyTemplate : MonoBehaviour
     {
         curentHealth -= damage;
 
-        if (curentHealth <= 0) { Death(); }
+        if (curentHealth <= 0) 
+        {
+            enemyKilled();
+            Death();
+        }
     }
 
 
