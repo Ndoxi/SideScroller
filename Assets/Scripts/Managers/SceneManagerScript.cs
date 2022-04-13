@@ -8,6 +8,7 @@ public class SceneManagerScript : MonoBehaviour
     [Header("Explosion effects")]
     public GameObject explosionPrefab;
 
+    [Space]
     [Header("All ammo for curent level")]
     public AllAmmoData allAmmoData;
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerControls : MonoBehaviour
 {
@@ -12,53 +14,54 @@ public class PlayerControls : MonoBehaviour
     public GameObject shootingSystemGO;
 
     private ShootingSystem _shootingSystem;
-    private float _playerSpeed;
     private Vector2 _playerDirection;
-    private bool _shootAmmo = false;
+    private bool _shootAmmo;
+
 
     private void Awake()
     {
         _shootingSystem = shootingSystemGO.GetComponent<ShootingSystem>();
-        _playerSpeed = rocketStats.speed;
     }
 
 
-    void Update()
+    private void Update()
     {
-        HandleInput();
-        Move();
-        Shoot();
+        PerformActions();
     }
 
 
-    private void HandleInput()
+    private void PerformActions()
     {
-        float directionX = Input.GetAxisRaw("Horizontal");
-        float directionY = Input.GetAxisRaw("Vertical");
-        _playerDirection = new Vector2(directionX, directionY).normalized;
+        transform.Translate(_playerDirection * rocketStats.speed * Time.deltaTime);
 
-        if (Input.GetMouseButton(0))
+        if (_shootAmmo)
         {
-            _shootAmmo = true;
-        } else
-        {
-            _shootAmmo = false;
+            _shootingSystem.ShootAmmo();
         }
     }
 
 
-    private void Move()
+    public void OnMovement(InputAction.CallbackContext context)
     {
-        float x = transform.position.x + _playerDirection.x * _playerSpeed * Time.deltaTime;
-        float y = transform.position.y + _playerDirection.y * _playerSpeed * Time.deltaTime;
-
-        transform.position = new Vector2(x, y);
+        _playerDirection = context.ReadValue<Vector2>();
     }
 
 
-    private void Shoot()
+    public void OnFire(InputAction.CallbackContext context)
     {
-        if (!_shootAmmo) { return; }
-        _shootingSystem.ShootAmmo();
+        switch (context.phase)
+        {
+            case InputActionPhase.Started:
+                {
+                    _shootAmmo = true;
+                    break;
+                }
+
+            case InputActionPhase.Canceled:
+                {
+                    _shootAmmo = false;
+                    break;
+                }
+        }
     }
 }
