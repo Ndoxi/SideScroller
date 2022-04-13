@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SceneManagerScript : MonoBehaviour
 {
     [Header("Explosion effects")]
@@ -32,16 +33,15 @@ public class SceneManagerScript : MonoBehaviour
         Destroy(explosionGO, 3f);
     }
 
+    
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
 
-    /// <summary>
-    /// Chouse ramdom ammo
-    /// </summary>
-    /// <returns></returns>
-    //public GameObject GetRandomAmmo()
-    //{
-    //    int ammoNumber = allAmmoData.allAmmo.Count;      
-    //    GameObject randomAmmo = allAmmoData.allAmmo[Random.Range(0, ammoNumber)].bulletPrefab;
 
-    //    return randomAmmo;
-    //}
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
 }

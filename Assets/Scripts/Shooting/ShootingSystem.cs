@@ -47,10 +47,14 @@ public class ShootingSystem : MonoBehaviour
 
     private void Awake()
     {
+        MeteorScript.AddAmmoToPlayer += LoadNewAmmo;
+    }
+
+
+    private void Start()
+    {
         AddAmmoData(defaultAmmo);
         LoadNewAmmo(defaultAmmo);
-
-        MeteorScript.AddAmmoToPlayer += LoadNewAmmo;
     }
 
 
