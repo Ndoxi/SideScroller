@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 
 public class MenuManager : MonoBehaviour
@@ -30,12 +29,5 @@ public class MenuManager : MonoBehaviour
         if (button == null) { return; }
 
         button.onClick.Invoke();
-    }
-
-
-    public void SelectedFirst(GameObject firstSelected)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstSelected);
     }
 }

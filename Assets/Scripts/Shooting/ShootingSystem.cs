@@ -72,6 +72,7 @@ public class ShootingSystem : MonoBehaviour
     /// </remarks>
     public void ShootAmmo()
     {
+        if (Time.timeScale == 0) return;
         if (_curentAmmoScript is null) return;
 
         _turretPos = turretGO.transform.position;
