@@ -49,7 +49,6 @@ public class SaveLoadManager : MonoBehaviour
 
         if (musicVolume == -1 || soundEffectsVolume == -1) { return; }
 
-
         mucisAudioSource.volume = musicVolume;
         soundEffectsAudioSource.volume = soundEffectsVolume;
     }

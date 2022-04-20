@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 
 public class ActivateMenu : MonoBehaviour
 {
-    [SerializeField] GameObject firstSelected;
+    [SerializeField] private GameObject firstSelected;
+
 
     private void OnEnable()
     {
-        SelectedFirst();
+        StartCoroutine(SetFirstSelectedButton());
     }
 
 
-    public void SelectedFirst()
+    IEnumerator SetFirstSelectedButton()
     {
+        yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelected);
     }

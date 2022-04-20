@@ -1,33 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using System;
 
 
 public class MenuManager : MonoBehaviour
-{
-    [SerializeField] List<GameObject> gameMenus;
+{      
+    public static Action CloseMenuAction;
 
-    public void ShowMeinMenu(GameObject mainMenu)
+
+    public void OnCancel(InputAction.CallbackContext context)
     {
-        foreach (GameObject menu in gameMenus)
+        if (context.performed)
         {
-            if (menu.activeSelf)
-            {
-                return;
-            }
+            CloseMenuAction?.Invoke();
         }
-
-        mainMenu.SetActive(true);
     }
 
-
-    public void ClickButton(GameObject buttonGO) 
-    {
-        Button button = buttonGO.GetComponent<Button>();
-        if (button == null) { return; }
-
-        button.onClick.Invoke();
-    }
 }
