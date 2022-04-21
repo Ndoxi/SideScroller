@@ -8,8 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class UISystem : MonoBehaviour
 {
-    public GameObject player;
-    [SerializeField] public GameObject deathSing; 
+    public GameObject deathSing; 
 
     public static UISystem Instance { set; get; }
 

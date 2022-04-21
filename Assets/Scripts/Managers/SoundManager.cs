@@ -76,7 +76,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerGetHit()
     {
-        Debug.Log("GetHit");
+        //Debug.Log("GetHit");
         if (playerGetHit == null) { return; }
         _soundEffects.PlayOneShot(playerGetHit);
     }
@@ -84,7 +84,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerShooting()
     {
-        Debug.Log("Shoot");
+        //Debug.Log("Shoot");
         if (shootingSound == null) { return; }
         _soundEffects.PlayOneShot(shootingSound);
     }
@@ -92,7 +92,7 @@ public class SoundManager : MonoBehaviour
 
     private void EnemyKilled()
     {
-        Debug.Log("EnemyKilled");
+       //Debug.Log("EnemyKilled");
         if (enemyKilledSound == null) { return; }
         _soundEffects.PlayOneShot(enemyKilledSound);
     }
@@ -100,7 +100,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerPickupPowerUp()
     {
-        Debug.Log("PowerUpPickedUp");
+        //Debug.Log("PowerUpPickedUp");
         if (powerUpPickup == null) { return; }
         _soundEffects.PlayOneShot(powerUpPickup);
     }

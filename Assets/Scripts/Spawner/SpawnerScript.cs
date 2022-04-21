@@ -7,9 +7,11 @@ public class SpawnerScript : MonoBehaviour
     [Header("List of enemys for curent level (excluding DEFAULT)")]
     public EnemyList enemyList;
 
-    [Space]
+    [Header("List of enemys for curent level")]
+    [SerializeField] private EnemiesWaveForLevel enemiesWaveForLevel;
+
     [Header("Ammo for curent level")]
-    public List<GameObject> ammoList;
+    [SerializeField] private List<GameObject> ammoList;
 
     private Stack<GameObject> _ammoStack = new Stack<GameObject>();
 
@@ -39,14 +41,14 @@ public class SpawnerScript : MonoBehaviour
 
     private void Start()
     {
-        InitializeEnemies();
-        InitializeAmmo();
+        //InitializeEnemies();
+        //InitializeAmmo();
     }
 
 
     private void Update()
     {
-        SpawnWave();
+        //SpawnWave();
     }
 
 
@@ -120,5 +122,42 @@ public class SpawnerScript : MonoBehaviour
         SpawnEnemy(Enemy.EnemyType.DEFAULT);
         SpawnEnemy(Enemy.EnemyType.DEFAULT);
         SpawnEnemy(Enemy.EnemyType.METEOR);
+    }
+
+
+    public void StartSpawnEnemies()
+    {
+        StartCoroutine(SpawnEnemies());
+    }
+
+
+    IEnumerator SpawnEnemies()
+    {
+        foreach (Wave enemyWave in enemiesWaveForLevel.EnemyWeves)
+        {
+            foreach (GameObject enemy in enemyWave.WaveEnemies)
+            {
+                SpawnEnemy(enemy);
+            }
+
+            yield return new WaitForSeconds(enemyWave.timeToNextWave);
+        }
+    }
+
+
+    public void SpawnEnemy(GameObject enemy)
+    {
+        if (enemy == null) { return; }
+
+        GameObject newEnemy = Instantiate(enemy);
+        SpriteRenderer sprite = newEnemy.GetComponentInChildren<SpriteRenderer>();
+
+        float size = 1;
+        if (sprite != null) { size = sprite.size.y; }
+
+        newEnemy.transform.position = new Vector2(gameObject.transform.position.x,
+            Random.Range(_minY + size, _maxY - size));
+
+        //if (enemyType == Enemy.EnemyType.METEOR) { newEnemy.GetComponent<MeteorScript>().loot = GetAmmo(); }
     }
 }

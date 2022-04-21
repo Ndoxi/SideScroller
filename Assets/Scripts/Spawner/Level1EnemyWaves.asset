@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a594c38d5691aec4b94bdf844ce02ad1, type: 3}
+  m_Name: Level1EnemyWaves
+  m_EditorClassIdentifier: 
+  EnemyWeves:
+  - WaveEnemies:
+    - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
+    - {fileID: 6223068772908050252, guid: 5f5eb0b54373bea4ca62e2ef275b7bed, type: 3}
+    - {fileID: 6223068772908050252, guid: 5f5eb0b54373bea4ca62e2ef275b7bed, type: 3}
+    timeToNextWave: 5
+  - WaveEnemies:
+    - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
+    - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
+    - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
+    timeToNextWave: 1.5
+  - WaveEnemies:
+    - {fileID: 6223068772908050252, guid: 5f5eb0b54373bea4ca62e2ef275b7bed, type: 3}
+    timeToNextWave: 0

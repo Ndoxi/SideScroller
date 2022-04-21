@@ -16,23 +16,22 @@ public class HealthBar : MonoBehaviour
     /// <summary>
     /// HealthBar <b>alpha-chanel / transparency</b> when player enters UI zone   
     /// </summary>
-    private float _minAlphaValue = 0.2f;
+    private float minAlphaValue = 0.2f;
 
     /// <summary>
     /// HealthBar <b>alpha-chanel / transparency</b> when player exits UI zone   
     /// </summary>
-    private float _maxAlphaValue = 1f;
+    private float maxAlphaValue = 1f;
 
-    private GameObject _player;
-    private CanvasGroup _healthbarCanvasGroup;
-    private Slider _slider;
-    private Image _healthBarFillImage;
+    private CanvasGroup healthbarCanvasGroup;
+    private Slider slider;
+    private Image healthBarFillImage;
 
 
     private void Awake()
     {
         PlayerScript.PlayerTakeDamage += PlayerTakesDamage;
-         _healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
+        healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
     }
 
 
@@ -44,23 +43,25 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        _healthBarFillImage = healthBarFill.GetComponent<Image>();
+        healthBarFillImage = healthBarFill.GetComponent<Image>();
+        slider = gameObject.GetComponentInChildren<Slider>();
 
-        GameObject _player = UISystem.GetComponent<UISystem>().player;
-        _slider = gameObject.GetComponentInChildren<Slider>();
+        if (slider is null) { return; }
 
-        if (_slider is null) { return; }
-        _slider.maxValue = _player.GetComponentInChildren<PlayerScript>().GetMaxHealth();
-        _slider.value = _slider.maxValue;
+        GameObject player = GameDirectorScript.playerGameObject;
+        int playerMaxHealth = player.GetComponentInChildren<PlayerScript>().GetMaxHealth();
+        slider.maxValue = playerMaxHealth;
+
+        slider.value = slider.maxValue;
     }
 
 
     /// <summary>
     /// </summary>
     /// <param name="damage">Amount of damage</param>
-    public void PlayerTakesDamage(int damage)
+    private void PlayerTakesDamage(int damage)
     {
-        _slider.value -= damage;
+        slider.value -= damage;
     }
 
 
@@ -85,21 +86,21 @@ public class HealthBar : MonoBehaviour
     /// </summary>
     public void SetFillColor()
     {
-        int healthPercentage = HealthPercentage(_slider.value, _slider.maxValue);
+        int healthPercentage = HealthPercentage(slider.value, slider.maxValue);
 
         if (healthPercentage > 70)
         {
-            _healthBarFillImage.color = fullHPColor;
+            healthBarFillImage.color = fullHPColor;
             return;
         }
 
         if (healthPercentage > 30)
         {
-            _healthBarFillImage.color = mediumHPColor;
+            healthBarFillImage.color = mediumHPColor;
             return;
         }
 
-        _healthBarFillImage.color = lowHPColor;
+        healthBarFillImage.color = lowHPColor;
     }
 
 
@@ -107,7 +108,7 @@ public class HealthBar : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) { return; }
 
-        _healthbarCanvasGroup.alpha = _minAlphaValue;
+        healthbarCanvasGroup.alpha = minAlphaValue;
     }
 
 
@@ -115,6 +116,6 @@ public class HealthBar : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) { return; }
 
-        _healthbarCanvasGroup.alpha = _maxAlphaValue;
+        healthbarCanvasGroup.alpha = maxAlphaValue;
     }
 }
