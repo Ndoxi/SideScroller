@@ -13,14 +13,14 @@ public class PlayerControls : MonoBehaviour
     [Header("Shooting system")]
     public GameObject shootingSystemGO;
 
-    private ShootingSystem _shootingSystem;
-    private Vector2 _playerDirection;
-    private bool _shootAmmo;
+    private ShootingSystem shootingSystem;
+    private Vector2 playerDirection;
+    private bool shootAmmo;
 
 
     private void Awake()
     {
-        _shootingSystem = shootingSystemGO.GetComponent<ShootingSystem>();
+        shootingSystem = shootingSystemGO.GetComponent<ShootingSystem>();
     }
 
 
@@ -32,18 +32,18 @@ public class PlayerControls : MonoBehaviour
 
     private void PerformActions()
     {
-        transform.Translate(_playerDirection * rocketStats.speed * Time.deltaTime);
+        transform.Translate(playerDirection * rocketStats.speed * Time.deltaTime);
 
-        if (_shootAmmo)
+        if (shootAmmo)
         {
-            _shootingSystem.ShootAmmo();
+            shootingSystem.ShootAmmo();
         }
     }
 
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        _playerDirection = context.ReadValue<Vector2>();
+        playerDirection = context.ReadValue<Vector2>();
     }
 
 
@@ -53,13 +53,13 @@ public class PlayerControls : MonoBehaviour
         {
             case InputActionPhase.Started:
                 {
-                    _shootAmmo = true;
+                    shootAmmo = true;
                     break;
                 }
 
             case InputActionPhase.Canceled:
                 {
-                    _shootAmmo = false;
+                    shootAmmo = false;
                     break;
                 }
         }

@@ -21,17 +21,18 @@ public class PlayerScript : MonoBehaviour, IHealth
 
     public RocketStats rocketStats;
 
-    private Animation _playerGetHitAnimation;
-    private int _maxHealth;
-    private int _curentHealth;
-    private bool _isInvincible = false;
+    private Animation playerGetHitAnimation;
+    private int maxHealth;
+    private int curentHealth;
+    private bool isInvincible = false;
+    private bool isDead = false;
 
 
     private void Awake()
     {
-        _playerGetHitAnimation = gameObject.GetComponent<Animation>();
-        _maxHealth = rocketStats.health;
-        _curentHealth = _maxHealth;
+        playerGetHitAnimation = gameObject.GetComponent<Animation>();
+        maxHealth = rocketStats.health;
+        curentHealth = maxHealth;
     }
 
 
@@ -41,7 +42,7 @@ public class PlayerScript : MonoBehaviour, IHealth
     /// <returns>Player max health</returns>
     public int GetMaxHealth()
     {
-        return _maxHealth;
+        return maxHealth;
     }
 
 
@@ -52,12 +53,12 @@ public class PlayerScript : MonoBehaviour, IHealth
     /// <param name="invincibilityDuration">Seconds of invincibility</param>
     IEnumerator Invincibility(float invincibilityDuration)
     {
-        _isInvincible = true;
-        _playerGetHitAnimation.Play();
+        isInvincible = true;
+        playerGetHitAnimation.Play();
 
         yield return new WaitForSeconds(invincibilityDuration);
-        _playerGetHitAnimation.Stop();
-        _isInvincible = false;
+        playerGetHitAnimation.Stop();
+        isInvincible = false;
     }
 
 
@@ -67,13 +68,13 @@ public class PlayerScript : MonoBehaviour, IHealth
     /// <param name="damage">Damage that enemy will take</param>
     public void TakeDamage(int damage)
     {
-        if (_isInvincible) { return; }
+        if (isInvincible) { return; }
 
         PlayerGetHit();
         PlayerTakeDamage(damage);
-        _curentHealth -= damage;
+        curentHealth -= damage;
 
-        if (_curentHealth <= 0) 
+        if (curentHealth <= 0) 
         { 
             Death();
             return; 
@@ -86,6 +87,9 @@ public class PlayerScript : MonoBehaviour, IHealth
     public void Death()
     {
         PlayerDies(gameObject.transform.position);
+    
+        UISystem.ShowDeathSign();
+
         Destroy(gameObject);
     }
 }

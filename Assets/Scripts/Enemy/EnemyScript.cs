@@ -8,28 +8,28 @@ using UnityEngine;
 /// </summary>
 public class EnemyScript : EnemyTemplate
 {
-    [SerializeField] private float _aggroRange;
-    [SerializeField] private bool _isAggro;
+    [SerializeField] private float aggroRange;
+    [SerializeField] private bool isAggro;
 
     //Movement
-    private Vector2 _moveDirection;
+    private Vector2 moveDirection;
 
     //AI
-    private GameObject _playerGO;
-    private float _distanceToPlayer = 0; 
+    private GameObject playerGO;
+    private float distanceToPlayer = 0; 
     
 
     private void Awake()
     {
         maxHealth = enemyStats.health;
         curentHealth = maxHealth;
-        _moveDirection = new Vector2(-1, 0).normalized;
+        moveDirection = new Vector2(-1, 0).normalized;
     }
 
 
     private void Start()
     {
-        _playerGO = GameObject.FindGameObjectWithTag("Player");
+        playerGO = GameObject.FindGameObjectWithTag("Player");
     }
 
 
@@ -37,9 +37,9 @@ public class EnemyScript : EnemyTemplate
     {
         CalculateDoctanceToPlayer();
 
-        if (_distanceToPlayer <= _aggroRange) { _isAggro = true; }
+        if (distanceToPlayer <= aggroRange) { isAggro = true; }
 
-        if (_isAggro && _playerGO != null)
+        if (isAggro && playerGO != null)
         {
             ChacePlayer();
         } else
@@ -51,22 +51,22 @@ public class EnemyScript : EnemyTemplate
 
     public void SetMoveDirection(Vector2 direction)
     {
-        _moveDirection = direction.normalized;
+        moveDirection = direction.normalized;
     }
 
 
     private void CalculateDoctanceToPlayer()
     {
-        if (_playerGO == null) { return; }
+        if (playerGO == null) { return; }
 
-        _distanceToPlayer = Vector2.Distance(transform.position, _playerGO.transform.position);
+        distanceToPlayer = Vector2.Distance(transform.position, playerGO.transform.position);
     }
 
 
     private void Move()
     {
-        float x = transform.position.x + _moveDirection.x * enemyStats.speed * Time.deltaTime;
-        float y = transform.position.y + _moveDirection.y * enemyStats.speed * Time.deltaTime;
+        float x = transform.position.x + moveDirection.x * enemyStats.speed * Time.deltaTime;
+        float y = transform.position.y + moveDirection.y * enemyStats.speed * Time.deltaTime;
 
         transform.position = new Vector2(x, y);
     }
@@ -74,9 +74,9 @@ public class EnemyScript : EnemyTemplate
 
     private void ChacePlayer()
     {
-        if (_playerGO == null) { return; }
+        if (playerGO == null) { return; }
         transform.position = Vector2.MoveTowards(transform.position, 
-            _playerGO.transform.position, enemyStats.speed * 1.5f * Time.deltaTime);
+            playerGO.transform.position, enemyStats.speed * 1.5f * Time.deltaTime);
     }
 
 

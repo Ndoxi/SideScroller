@@ -31,7 +31,9 @@ public abstract class EnemyTemplate : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) { return; }
 
-        PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
+        PlayerScript playerScript = collision.gameObject.GetComponentInChildren<PlayerScript>();
+
+        if (playerScript == null) { return; }
         playerScript.TakeDamage(enemyStats.damage);
     }
 

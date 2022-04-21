@@ -8,8 +8,20 @@ using UnityEngine.UI;
 /// </summary>
 public class UISystem : MonoBehaviour
 {
-    /// <summary>
-    /// Player game object
-    /// </summary>
     public GameObject player;
+    [SerializeField] public GameObject deathSing; 
+
+    public static UISystem Instance { set; get; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
+    public static void ShowDeathSign()
+    {
+        if (Instance.deathSing.activeSelf) { return; }
+        Instance.deathSing.SetActive(true);
+    }
 }

@@ -87,8 +87,8 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: f54cbfa021f16e64dbbcead885d96f91, type: 2}
   maxHealth: 0
   curentHealth: 0
-  _aggroRange: 5
-  _isAggro: 0
+  aggroRange: 5
+  isAggro: 0
 --- !u!114 &-2364525988749787811
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class HealthBar : MonoBehaviour
         _slider = gameObject.GetComponentInChildren<Slider>();
 
         if (_slider is null) { return; }
-        _slider.maxValue = _player.GetComponent<PlayerScript>().GetMaxHealth();
+        _slider.maxValue = _player.GetComponentInChildren<PlayerScript>().GetMaxHealth();
         _slider.value = _slider.maxValue;
     }
 

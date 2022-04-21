@@ -6,14 +6,23 @@ using UnityEngine;
 public class SceneManagerScript : MonoBehaviour
 {
     [Header("Explosion effects")]
-    public GameObject explosionPrefab;
+    [SerializeField] private GameObject explosionPrefab;
 
     [Space]
     [Header("All ammo for curent level")]
-    public AllAmmoData allAmmoData;
+    [SerializeField] private AllAmmoData allAmmoData;
+
+    [Space]
+    [Header("Time scale")]
+    [SerializeField] private static float normalTimeScale = 1;
+
+    public static SceneManagerScript Instance { set; get; }
+
 
     private void Awake()
     {
+        Instance = this;
+
         PlayerScript.PlayerDies += GameObjectDies;
     }
 
@@ -43,6 +52,13 @@ public class SceneManagerScript : MonoBehaviour
 
     public void ResumeGame()
     {
-        Time.timeScale = 1;
+        Time.timeScale = normalTimeScale;
+    }
+
+
+    public static void SetTimeScale(float timeScale)
+    {
+        normalTimeScale = timeScale;
+        Time.timeScale = timeScale;
     }
 }
