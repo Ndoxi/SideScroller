@@ -31,6 +31,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         PlayerScript.PlayerTakeDamage += PlayerTakesDamage;
+        GameDirectorScript.RestartGame += ResetHealthBar;
         healthbarCanvasGroup = gameObject.GetComponent<CanvasGroup>();
     }
 
@@ -38,6 +39,7 @@ public class HealthBar : MonoBehaviour
     private void OnDisable()
     {
         PlayerScript.PlayerTakeDamage -= PlayerTakesDamage;
+        GameDirectorScript.RestartGame -= ResetHealthBar;
     }
 
 
@@ -49,10 +51,19 @@ public class HealthBar : MonoBehaviour
         if (slider is null) { return; }
 
         GameObject player = GameDirectorScript.playerGameObject;
+
+        Debug.Log(player.name);
+
         int playerMaxHealth = player.GetComponentInChildren<PlayerScript>().GetMaxHealth();
         slider.maxValue = playerMaxHealth;
 
         slider.value = slider.maxValue;
+    }
+
+
+    private void ResetHealthBar()
+    {
+        slider.value = slider.maxValue; ;
     }
 
 

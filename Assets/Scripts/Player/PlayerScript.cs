@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour, IHealth
 {
@@ -19,19 +20,26 @@ public class PlayerScript : MonoBehaviour, IHealth
     /// </summary>
     public static event EventManager.PlayerDeathAction PlayerDies;
 
-    public RocketStats rocketStats;
+    [SerializeField] private RocketStats rocketStats;
 
     private Animation playerGetHitAnimation;
     private int maxHealth;
     private int curentHealth;
     private bool isInvincible = false;
-    private bool isDead = false;
+    //private bool isDead = false;
 
 
     private void Awake()
     {
         playerGetHitAnimation = gameObject.GetComponent<Animation>();
         maxHealth = rocketStats.health;
+        curentHealth = maxHealth;
+
+    }
+
+
+    public void RestoreAllHealth()
+    {
         curentHealth = maxHealth;
     }
 

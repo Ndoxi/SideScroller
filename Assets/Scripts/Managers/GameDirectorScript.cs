@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GameDirectorScript : MonoBehaviour
 {
     [Header("Player")]
@@ -13,19 +12,18 @@ public class GameDirectorScript : MonoBehaviour
     [Header("Enemy spawner")]
     [SerializeField] private SpawnerScript enemySpawner;
 
+    [Header("Menu manager")]
+    [SerializeField] private MenuManager menuManager;
+
     public static GameObject playerGameObject { get; set; }
 
     public static GameDirectorScript Instance { get; set; }
-    
+
+    public static Action RestartGame;
 
     private void Awake()
     {
-        Instance = this;     
-    }
-
-
-    private void Start()
-    {
+        Instance = this;
         StartGame();
     }
 
@@ -43,18 +41,30 @@ public class GameDirectorScript : MonoBehaviour
     }
 
 
-    private void RestartLevel()
+    public void RestartLevel()
     {
+        RestartGame?.Invoke();
         CleanLevel();
-        LoadCheckPoint();
         StartGame();
+        MenuManager.CloseMenuAction?.Invoke();
     }
 
 
     private void SpawnPlayer()
     {
         playerGameObject = Instantiate(playerPrefab);
+        ConfigurePlayer();
         playerGameObject.transform.position = playerSpawnPosition;
+    }
+
+
+    private void ConfigurePlayer()
+    {
+        PlayerScript playerScript = playerGameObject.GetComponentInChildren<PlayerScript>();
+        playerScript.RestoreAllHealth();
+
+        PlayerControls playerControls = playerGameObject.GetComponent<PlayerControls>();
+        playerControls.ConfigureCancel(menuManager);
     }
 
 
@@ -66,10 +76,12 @@ public class GameDirectorScript : MonoBehaviour
 
     private void CleanLevel()
     {
-    }
+        Destroy(playerGameObject);
+        GameObject[] activeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-
-    private void LoadCheckPoint()
-    {
+        foreach (GameObject enemy in activeEnemies)
+        {
+            Destroy(enemy);
+        }
     }
 }

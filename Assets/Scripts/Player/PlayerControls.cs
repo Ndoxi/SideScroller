@@ -30,6 +30,15 @@ public class PlayerControls : MonoBehaviour
     }
 
 
+    public void ConfigureCancel(MenuManager menuManager)
+    {
+        PlayerInput playerInput = gameObject.GetComponent<PlayerInput>();
+        InputAction inputActionCancel = playerInput.actions.FindAction("Cancel");
+
+        inputActionCancel.performed += menuManager.OnCancel;
+    }
+
+
     private void PerformActions()
     {
         transform.Translate(playerDirection * rocketStats.speed * Time.deltaTime);

@@ -39,90 +39,101 @@ public class SpawnerScript : MonoBehaviour
     }
 
 
-    private void Start()
+    private void OnEnable()
     {
-        //InitializeEnemies();
-        //InitializeAmmo();
+        GameDirectorScript.RestartGame += RestartSpawner;
     }
 
 
-    private void Update()
+    private void OnDisable()
     {
-        //SpawnWave();
+        GameDirectorScript.RestartGame -= RestartSpawner;
     }
 
-
-    private void InitializeEnemies()
-    {
-        foreach (Enemy enemy in enemyList.enemies)
-        {
-            if (!_enemies.ContainsKey(enemy.enemyType)) {
-                _enemies.Add(enemy.enemyType, enemy.enemyPrefab);      
-            }
-        }
-    }
+    //private void Start()
+    //{
+    //    //InitializeEnemies();
+    //    //InitializeAmmo();
+    //}
 
 
-    private void InitializeAmmo()
-    {
-        foreach (GameObject ammo in ammoList)
-        {
-            _ammoStack.Push(ammo);
-        }
-    }
+    //private void Update()
+    //{
+    //    //SpawnWave();
+    //}
 
 
-    public void AddAmmo(GameObject ammo)
-    {
-        _ammoStack.Push(ammo);
-    }
+    //private void InitializeEnemies()
+    //{
+    //    foreach (Enemy enemy in enemyList.enemies)
+    //    {
+    //        if (!_enemies.ContainsKey(enemy.enemyType)) {
+    //            _enemies.Add(enemy.enemyType, enemy.enemyPrefab);      
+    //        }
+    //    }
+    //}
 
 
-    public GameObject GetAmmo()
-    {
-        if (_ammoStack.Count == 1) { return _ammoStack.Peek(); }
-        return _ammoStack.Pop();
-    }
+    //private void InitializeAmmo()
+    //{
+    //    foreach (GameObject ammo in ammoList)
+    //    {
+    //        _ammoStack.Push(ammo);
+    //    }
+    //}
 
 
-    /// <summary>
-    /// Add enemy to spawner
-    /// </summary>
-    /// <param name="newEnemy">Info about new enemy</param>
-    public void AddEnemy(Enemy newEnemy)
-    {
-        if (_enemies.ContainsKey(newEnemy.enemyType)) { return; }
-
-        _enemies.Add(newEnemy.enemyType, newEnemy.enemyPrefab);
-    }
+    //public void AddAmmo(GameObject ammo)
+    //{
+    //    _ammoStack.Push(ammo);
+    //}
 
 
-    public void SpawnEnemy(Enemy.EnemyType enemyType)
-    {
-        if (!_enemies.ContainsKey(enemyType)) { return; }
-
-        GameObject newEnemy = Instantiate(_enemies[enemyType]);
-        SpriteRenderer sprite = newEnemy.GetComponentInChildren<SpriteRenderer>();
-
-        float size = 1;
-        if (sprite != null) { size = sprite.size.y; }
-
-        newEnemy.transform.position = new Vector2(gameObject.transform.position.x, 
-            Random.Range(_minY + size, _maxY - size));
-
-        if (enemyType == Enemy.EnemyType.METEOR) { newEnemy.GetComponent<MeteorScript>().loot = GetAmmo(); }
-    }
+    //public GameObject GetAmmo()
+    //{
+    //    if (_ammoStack.Count == 1) { return _ammoStack.Peek(); }
+    //    return _ammoStack.Pop();
+    //}
 
 
-    public void SpawnWave()
-    {
-        if (_nextWave > Time.time) { return; }
-        _nextWave = Time.time + _wavesInterval;
+    ///// <summary>
+    ///// Add enemy to spawner
+    ///// </summary>
+    ///// <param name="newEnemy">Info about new enemy</param>
+    //public void AddEnemy(Enemy newEnemy)
+    //{
+    //    if (_enemies.ContainsKey(newEnemy.enemyType)) { return; }
 
-        SpawnEnemy(Enemy.EnemyType.DEFAULT);
-        SpawnEnemy(Enemy.EnemyType.DEFAULT);
-        SpawnEnemy(Enemy.EnemyType.METEOR);
-    }
+    //    _enemies.Add(newEnemy.enemyType, newEnemy.enemyPrefab);
+    //}
+
+
+    //public void SpawnEnemy(Enemy.EnemyType enemyType)
+    //{
+    //    if (!_enemies.ContainsKey(enemyType)) { return; }
+
+    //    GameObject newEnemy = Instantiate(_enemies[enemyType]);
+    //    SpriteRenderer sprite = newEnemy.GetComponentInChildren<SpriteRenderer>();
+
+    //    float size = 1;
+    //    if (sprite != null) { size = sprite.size.y; }
+
+    //    newEnemy.transform.position = new Vector2(gameObject.transform.position.x, 
+    //        Random.Range(_minY + size, _maxY - size));
+
+    //    if (enemyType == Enemy.EnemyType.METEOR) { newEnemy.GetComponent<MeteorScript>().loot = GetAmmo(); }
+    //}
+
+
+    //public void SpawnWave()
+    //{
+    //    if (_nextWave > Time.time) { return; }
+    //    _nextWave = Time.time + _wavesInterval;
+
+    //    SpawnEnemy(Enemy.EnemyType.DEFAULT);
+    //    SpawnEnemy(Enemy.EnemyType.DEFAULT);
+    //    SpawnEnemy(Enemy.EnemyType.METEOR);
+    //}
 
 
     public void StartSpawnEnemies()
@@ -145,11 +156,12 @@ public class SpawnerScript : MonoBehaviour
     }
 
 
-    public void SpawnEnemy(GameObject enemy)
+    private void SpawnEnemy(GameObject enemy)
     {
         if (enemy == null) { return; }
 
         GameObject newEnemy = Instantiate(enemy);
+
         SpriteRenderer sprite = newEnemy.GetComponentInChildren<SpriteRenderer>();
 
         float size = 1;
@@ -157,7 +169,11 @@ public class SpawnerScript : MonoBehaviour
 
         newEnemy.transform.position = new Vector2(gameObject.transform.position.x,
             Random.Range(_minY + size, _maxY - size));
+    }
 
-        //if (enemyType == Enemy.EnemyType.METEOR) { newEnemy.GetComponent<MeteorScript>().loot = GetAmmo(); }
+
+    private void RestartSpawner()
+    {
+        StopCoroutine(SpawnEnemies());
     }
 }

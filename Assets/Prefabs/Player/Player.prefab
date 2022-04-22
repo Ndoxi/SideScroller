@@ -188,19 +188,7 @@ MonoBehaviour:
     m_ActionId: 031a3349-8a45-40de-9ee0-4f51869037b5
     m_ActionName: PlayerActionMap/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: OnCancel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: b391bf0e-3e16-4ddb-811d-e6c6c5d3e695
     m_ActionName: PlayerActionMap/Menu[/Keyboard/escape]
   - m_PersistentCalls:
@@ -234,6 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocketStats: {fileID: 11400000, guid: 0149bdb0ea8042d42a27cf59bc629d04, type: 2}
   shootingSystemGO: {fileID: 3841907348226344073}
+  menuManagerGO: {fileID: 0}
 --- !u!1 &3841907347397813405
 GameObject:
   m_ObjectHideFlags: 0
