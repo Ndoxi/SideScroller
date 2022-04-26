@@ -17,6 +17,8 @@ public class ShootAttack : Attack
 
     public override void DoAttack()
     {
+        if (turret == null) { return; }
+
         GameObject bullet = Instantiate(bulletPrefab);
         bullet.transform.position = turret.transform.position;
 

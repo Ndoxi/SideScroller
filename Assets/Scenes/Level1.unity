@@ -10697,8 +10697,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turret: {fileID: 0}
-  bulletPrefab: {fileID: 0}
-  bulletStats: {fileID: 11400000, guid: 7021450b84e1bc8498b8545a7e6ceaaa, type: 2}
+  laserPrefab: {fileID: 721609896798681141, guid: 3c471f15d17272d44acdc485ef326db2, type: 3}
+  laserStats: {fileID: 11400000, guid: 7021450b84e1bc8498b8545a7e6ceaaa, type: 2}
 --- !u!1 &1492293314
 GameObject:
   m_ObjectHideFlags: 0

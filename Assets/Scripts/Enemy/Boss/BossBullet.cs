@@ -25,4 +25,16 @@ public class BossBullet : MonoBehaviour
         this.bulletDamage = bulletDamage;
         this.bulletSpeed = bulletSpeed;
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") == false) { return; }
+
+        PlayerScript playerScript = collision.gameObject.GetComponentInChildren<PlayerScript>();
+
+        if (playerScript == null) { return; }
+        playerScript.TakeDamage(bulletDamage);
+        Destroy(gameObject);
+    }
 }
