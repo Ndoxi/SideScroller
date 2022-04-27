@@ -6,22 +6,14 @@ using System;
 
 public class BossScript : EnemyTemplate
 {
+    [Header("Boss name")]
+    [SerializeField] private string bossName;
 
-    private void ShootAttack()
+
+    private void Awake()
     {
-
-    }
-
-
-    private void LaserAttack()
-    {
-
-    }
-
-
-    private void RamAttack()
-    {
-
+        maxHealth = enemyStats.health;
+        curentHealth = maxHealth;
     }
 
 

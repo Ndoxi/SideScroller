@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f64362d522969648a4aef5d43d36195, type: 3}
-  m_Name: BossStats
+  m_Name: DrillEnemyStats
   m_EditorClassIdentifier: 
-  health: 400
-  speed: 3
-  damage: 20
+  health: 20
+  speed: 6
+  damage: 15

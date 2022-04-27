@@ -20,6 +20,8 @@ public class LaserScript : MonoBehaviour
     private void Awake()
     {
         TurnOffColliders();
+
+        BossAI.StartAimAction?.Invoke();
     }
 
     private void OnEnable()
@@ -56,6 +58,7 @@ public class LaserScript : MonoBehaviour
 
     public void FireLaser()
     {
+        BossAI.StopAimAction?.Invoke();
         TurnOnColliders();
         StartCoroutine(StopLiser());
     }
@@ -63,7 +66,7 @@ public class LaserScript : MonoBehaviour
 
     IEnumerator StopLiser()
     {
-        yield return new WaitForSeconds(3.25f);
+        yield return new WaitForSeconds(2.5f);
         Destroy(gameObject);
     }
 

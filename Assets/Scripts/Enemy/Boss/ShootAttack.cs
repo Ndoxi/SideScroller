@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShootAttack : Attack
 {
     [Header("Turret")]
-    [SerializeField] private GameObject turret;
+    [SerializeField] private List<GameObject> turrets;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject bulletPrefab;
@@ -17,10 +17,11 @@ public class ShootAttack : Attack
 
     public override void DoAttack()
     {
-        if (turret == null) { return; }
+        if (turrets.Count == 0) { return; }
 
         GameObject bullet = Instantiate(bulletPrefab);
-        bullet.transform.position = turret.transform.position;
+        GameObject randomTurret = GetRandomTurret();
+        bullet.transform.position = randomTurret.transform.position;
 
         BossBullet bulletScript = bullet.GetComponent<BossBullet>();
 
@@ -31,5 +32,17 @@ public class ShootAttack : Attack
         }
 
         bulletScript.SetBulletParams(bulletStats.damage, bulletStats.speed);
+    }
+
+
+    private GameObject GetRandomTurret()
+    {
+        int max = turrets.Count;
+
+        int randomIndex = Random.Range(0, max);
+
+        Debug.Log($"Turret {randomIndex}");
+
+        return turrets[randomIndex];
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class EnemyTemplate : MonoBehaviour
 {
     public static event EventManager.EnemyKilledAction enemyKilled;
+
     public EnemyStats enemyStats;
 
     [HideInInspector] public int maxHealth;
