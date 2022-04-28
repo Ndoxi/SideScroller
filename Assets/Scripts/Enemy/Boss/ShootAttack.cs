@@ -14,6 +14,11 @@ public class ShootAttack : Attack
     [Header("Attack stats")]
     [SerializeField] private AmmoData bulletStats;
 
+    [Header("Sound effects")]
+    [SerializeField] private AudioClip shootSound;
+
+    private IEnumerator shooting;
+
 
     public override void DoAttack()
     {
@@ -32,6 +37,8 @@ public class ShootAttack : Attack
         }
 
         bulletScript.SetBulletParams(bulletStats.damage, bulletStats.speed);
+
+        SoundManager.PlaySoundEffect(shootSound);
     }
 
 
@@ -44,5 +51,30 @@ public class ShootAttack : Attack
         Debug.Log($"Turret {randomIndex}");
 
         return turrets[randomIndex];
+    }
+
+
+    public void StartShooting()
+    {
+        shooting = StartShootingCoruotine();
+        StartCoroutine(shooting);
+    }
+
+
+    public void StopShooting()
+    {
+        if (shooting == null) { return; }
+        StopCoroutine(shooting);
+    }
+
+
+    IEnumerator StartShootingCoruotine()
+    {
+        while (true)
+        {
+            DoAttack();
+
+            yield return new WaitForSeconds(bulletStats.fireRate);
+        }
     }
 }

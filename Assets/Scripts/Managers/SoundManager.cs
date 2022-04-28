@@ -6,8 +6,8 @@ using System;
 public class SoundManager : MonoBehaviour
 {
     [Header("Objects")]
-    [SerializeField] GameObject backgroundMusicGO;
-    [SerializeField] GameObject soundEffectsGO;
+    [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private AudioSource soundEffects;
 
     [Space]
     [Header("Sound effects")]
@@ -16,15 +16,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip enemyKilledSound;
     [SerializeField] AudioClip powerUpPickup;
 
-    private AudioSource _backgroundMusic;
-    private AudioSource _soundEffects;
 
+    public static SoundManager Instance { get; set; }
 
     private void Awake()
     {
-        _backgroundMusic = backgroundMusicGO.GetComponent<AudioSource>();
-        _soundEffects = soundEffectsGO.GetComponent<AudioSource>();
-
         BindEvents();
     }
 
@@ -32,6 +28,12 @@ public class SoundManager : MonoBehaviour
     private void OnDestroy()
     {
         UnbindEvents();
+    }
+
+
+    private void OnEnable()
+    {
+        Instance = this;
     }
 
 
@@ -55,22 +57,22 @@ public class SoundManager : MonoBehaviour
 
     public void SetBackGroundMusicVolume(float volume)
     {
-        if (_backgroundMusic == null) { return; }
-        _backgroundMusic.volume = volume;
+        if (backgroundMusic == null) { return; }
+        backgroundMusic.volume = volume;
     }
 
 
     public void SetSoundEffectsVolume(float volume)
     {
-        if (_soundEffects == null) { return; }
-        _soundEffects.volume = volume;
+        if (soundEffects == null) { return; }
+        soundEffects.volume = volume;
     }
 
 
-    private void PlaySoundEffect(AudioClip audioClip)
+    public static void PlaySoundEffect(AudioClip audioClip)
     {
         if (audioClip == null) { return; }
-        _soundEffects.PlayOneShot(audioClip);
+        Instance.soundEffects.PlayOneShot(audioClip);
     }
 
 
@@ -78,7 +80,7 @@ public class SoundManager : MonoBehaviour
     {
         //Debug.Log("GetHit");
         if (playerGetHit == null) { return; }
-        _soundEffects.PlayOneShot(playerGetHit);
+        soundEffects.PlayOneShot(playerGetHit);
     }
 
 
@@ -86,7 +88,7 @@ public class SoundManager : MonoBehaviour
     {
         //Debug.Log("Shoot");
         if (shootingSound == null) { return; }
-        _soundEffects.PlayOneShot(shootingSound);
+        soundEffects.PlayOneShot(shootingSound);
     }
 
 
@@ -94,7 +96,7 @@ public class SoundManager : MonoBehaviour
     {
        //Debug.Log("EnemyKilled");
         if (enemyKilledSound == null) { return; }
-        _soundEffects.PlayOneShot(enemyKilledSound);
+        soundEffects.PlayOneShot(enemyKilledSound);
     }
 
 
@@ -102,6 +104,6 @@ public class SoundManager : MonoBehaviour
     {
         //Debug.Log("PowerUpPickedUp");
         if (powerUpPickup == null) { return; }
-        _soundEffects.PlayOneShot(powerUpPickup);
+        soundEffects.PlayOneShot(powerUpPickup);
     }
 }

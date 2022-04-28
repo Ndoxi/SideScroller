@@ -16,7 +16,6 @@ MonoBehaviour:
   - WaveEnemies:
     - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
     - {fileID: 6223068772908050252, guid: 5f5eb0b54373bea4ca62e2ef275b7bed, type: 3}
-    - {fileID: 6223068772908050252, guid: 5f5eb0b54373bea4ca62e2ef275b7bed, type: 3}
     timeToNextWave: 5
   - WaveEnemies:
     - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
@@ -34,4 +33,8 @@ MonoBehaviour:
     - {fileID: 6958394263137937548, guid: d819ca3f268018e4baec0657c2d1defd, type: 3}
     - {fileID: 6958394263137937548, guid: d819ca3f268018e4baec0657c2d1defd, type: 3}
     - {fileID: 6958394263137937548, guid: d819ca3f268018e4baec0657c2d1defd, type: 3}
+    - {fileID: 1020010559458797927, guid: 668526f64339df4409191f1c41a58538, type: 3}
+    timeToNextWave: 10
+  - WaveEnemies:
+    - {fileID: 9006685188288635059, guid: cabc6c87b154fb0479798a7506a16a19, type: 3}
     timeToNextWave: 0

@@ -12,6 +12,9 @@ public class RamAttack : Attack
     [SerializeField] private GameObject dangerZoneGO;
     [SerializeField] private Animation dangerZoneAnimation;
 
+    [Header("Sound effects")]
+    [SerializeField] private AudioClip preparingRamSound;
+
     private Vector2 posBeforeRam;
 
 
@@ -21,6 +24,7 @@ public class RamAttack : Attack
 
         dangerZoneGO.SetActive(true);
 
+        SoundManager.PlaySoundEffect(preparingRamSound);
         StartCoroutine(PrepareForRam());
     }
 

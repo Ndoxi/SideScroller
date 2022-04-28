@@ -14,7 +14,23 @@ public class LaserAttack : Attack
     [Header("Attack stats")]
     [SerializeField] private AmmoData laserStats;
 
+    [Header("Sound effects")]
+    [SerializeField] private AudioClip preparingLaserSound;
+    [SerializeField] private AudioClip shootLaserSound;
+
     private SpriteRenderer laserSprite;
+
+
+    private void OnEnable()
+    {
+        LaserStateMachine.FireLaserAction += PlayShootingLaserSound;    
+    }
+
+
+    private void OnDisable()
+    {
+        LaserStateMachine.FireLaserAction -= PlayShootingLaserSound;
+    }
 
 
     public override void DoAttack()
@@ -35,9 +51,23 @@ public class LaserAttack : Attack
         pos.x -= spriteWidht / 2;
         laser.transform.position = pos;
 
-        LaserScript laserScript = laser.GetComponent<LaserScript>();
-        if (laserScript == null) { return; }
+        PlayPreparingLaserSound();
 
+        LaserScript laserScript = laser.GetComponent<LaserScript>();
+
+        if (laserScript == null) { return; }
         laserScript.SetLaserDamage(laserStats.damage);
+    }
+
+
+    private void PlayPreparingLaserSound()
+    {
+        SoundManager.PlaySoundEffect(preparingLaserSound);
+    }
+
+
+    private void PlayShootingLaserSound()
+    {
+        SoundManager.PlaySoundEffect(shootLaserSound);
     }
 }
