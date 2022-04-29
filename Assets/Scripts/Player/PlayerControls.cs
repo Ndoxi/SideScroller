@@ -21,6 +21,7 @@ public class PlayerControls : MonoBehaviour
     private void Awake()
     {
         shootingSystem = shootingSystemGO.GetComponent<ShootingSystem>();
+        ConfigureCancel();
     }
 
 
@@ -30,12 +31,12 @@ public class PlayerControls : MonoBehaviour
     }
 
 
-    public void ConfigureCancel(MenuManager menuManager)
+    public void ConfigureCancel()
     {
         PlayerInput playerInput = gameObject.GetComponent<PlayerInput>();
         InputAction inputActionCancel = playerInput.actions.FindAction("Cancel");
 
-        inputActionCancel.performed += menuManager.OnCancel;
+        inputActionCancel.performed += MenuManager.OnCancel;
     }
 
 

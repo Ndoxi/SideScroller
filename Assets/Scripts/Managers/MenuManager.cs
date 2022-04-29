@@ -11,12 +11,32 @@ public class MenuManager : MonoBehaviour
 {      
     public static Action CloseMenuAction;
 
+    [Header("Hint for player")]
+    [SerializeField] private GameObject hintGO;
 
-    public void OnCancel(InputAction.CallbackContext context)
+
+    private void Start()
+    {
+        StartCoroutine(ShowHint());
+    }
+
+
+    public static void OnCancel(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             CloseMenuAction?.Invoke();
         }
+    }
+
+
+    IEnumerator ShowHint()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        hintGO.SetActive(true);
+        yield return new WaitForSeconds(7.5f);
+
+        hintGO.SetActive(false);
     }
 }

@@ -6,10 +6,28 @@ using UnityEngine;
 public class EventManager : MonoBehaviour
 {
     /// <summary>
-    /// Player takes damage
+    /// Set player healthbar value
     /// </summary>
     /// <param name="damage">Amount of damage</param>
-    public delegate void TakeDamageAction(int damage);
+    public delegate void SetPlayerHealthBarValueAction(int healthAmount);
+
+    /// <summary>
+    /// Set player healthbar value
+    /// </summary>
+    /// <param name="damage">Amount of damage</param>
+    public delegate void SetPlayerExpBarValueAction(int expAmount);
+
+    /// <summary>
+    /// Give player Exp
+    /// </summary>
+    /// <param name="expAmount"></param>
+    public delegate void GivePlayerExpAction(int expAmount);
+
+    /// <summary>
+    /// Set boss healthbar value
+    /// </summary>
+    /// <param name="damage"></param>
+    public delegate void SetBossHealthBarValueAction(int healthAmount);
 
     /// <summary>
     /// Player dies

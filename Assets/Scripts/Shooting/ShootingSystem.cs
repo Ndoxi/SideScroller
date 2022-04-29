@@ -33,8 +33,6 @@ using UnityEngine;
 /// </summary>
 public class ShootingSystem : MonoBehaviour
 {
-    public static event EventManager.PickupPowerUpAction PlayerPickUpPowerUp;
-
     [Header("Turret object and default ammo")]
     public GameObject turretGO;
     public GameObject defaultAmmo;
@@ -124,8 +122,6 @@ public class ShootingSystem : MonoBehaviour
 
         _curentAmmo = Instantiate(newAmmo);
         _curentAmmoScript = _curentAmmo.GetComponent<AmmoTemplate>();
-
-        PlayerPickUpPowerUp();
     }
 
 
@@ -138,7 +134,5 @@ public class ShootingSystem : MonoBehaviour
 
         _curentAmmo = Instantiate(ReadAmmoData());
         _curentAmmoScript = _curentAmmo.GetComponent<AmmoTemplate>();
-
-        PlayerPickUpPowerUp();
     }
 }

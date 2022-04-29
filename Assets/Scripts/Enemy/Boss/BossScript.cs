@@ -7,16 +7,13 @@ using System;
 
 public class BossScript : EnemyTemplate
 {
+    public static EventManager.SetBossHealthBarValueAction bossTakeDamageAction;
+
     [Header("Boss name")]
     [SerializeField] private string bossName;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip deathSound;
-
-    [Header("UI")]
-    [SerializeField] private GameObject bossHealthBar;
-
-    private GameObject healthbar;
 
 
     private void Awake()
@@ -28,16 +25,27 @@ public class BossScript : EnemyTemplate
 
     private void OnEnable()
     {
-        GameObject canvas = GameObject.FindGameObjectWithTag("MainCanvas");
-
-        healthbar = null;
-        healthbar = Instantiate(bossHealthBar, canvas.transform);
+        UISystem.ShowBossHealtBar(bossName, maxHealth);
     }
 
 
     private void OnDisable()
     {
-        Destroy(healthbar);
+        UISystem.HideBossHealthBar();
+    }
+
+
+    public override void TakeDamage(int damage)
+    {
+        curentHealth -= damage;
+
+        bossTakeDamageAction?.Invoke(curentHealth);
+
+        if (curentHealth <= 0)
+        {
+            GiveExp(enemyStats.deathExp);
+            Death();
+        }
     }
 
 

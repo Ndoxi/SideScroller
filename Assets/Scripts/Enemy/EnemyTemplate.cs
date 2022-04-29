@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class EnemyTemplate : MonoBehaviour
 {
+    /// <summary>
+    /// Give player exp
+    /// </summary>
+    public static event EventManager.GivePlayerExpAction GivePlayerExp;
+
     public static event EventManager.EnemyKilledAction enemyKilled;
 
     public EnemyStats enemyStats;
@@ -16,15 +22,23 @@ public abstract class EnemyTemplate : MonoBehaviour
     /// Enemy takes damage. Call <b>Death</b> method when <c>curentHealth</c> &lt;= 0
     /// </summary>
     /// <param name="damage">Amount of damage</param>
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         curentHealth -= damage;
 
         if (curentHealth <= 0) 
         {
             enemyKilled();
+
+            GiveExp(enemyStats.deathExp);
             Death();
         }
+    }
+
+
+    public void GiveExp(int expAmount)
+    {
+        GivePlayerExp?.Invoke(expAmount);
     }
 
 

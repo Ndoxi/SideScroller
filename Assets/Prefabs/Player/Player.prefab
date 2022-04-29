@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocketStats: {fileID: 11400000, guid: 0149bdb0ea8042d42a27cf59bc629d04, type: 2}
   shootingSystemGO: {fileID: 3841907348226344073}
-  menuManagerGO: {fileID: 0}
 --- !u!1 &3841907347397813405
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketStats: {fileID: 11400000, guid: 0149bdb0ea8042d42a27cf59bc629d04, type: 2}
+  getExpSound: {fileID: 8300000, guid: bc4872e1c7516e94d8a09f1bab5070e2, type: 3}
+  levelUpSound: {fileID: 8300000, guid: 26ac7adacc2e0264d89bb873d37aa9f6, type: 3}
 --- !u!111 &3841907348902792175
 Animation:
   m_ObjectHideFlags: 0

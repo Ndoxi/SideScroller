@@ -21,11 +21,13 @@ public class GameDirectorScript : MonoBehaviour
 
     public static Action RestartGame;
 
+
     private void Awake()
     {
         Instance = this;
         StartGame();
     }
+
 
 
     private void OnEnable()
@@ -36,6 +38,7 @@ public class GameDirectorScript : MonoBehaviour
 
     private void StartGame()
     {
+        Time.timeScale = 1;
         SpawnPlayer();
         StartSpawnEnemies();
     }
@@ -62,9 +65,7 @@ public class GameDirectorScript : MonoBehaviour
     {
         PlayerScript playerScript = playerGameObject.GetComponentInChildren<PlayerScript>();
         playerScript.RestoreAllHealth();
-
-        PlayerControls playerControls = playerGameObject.GetComponent<PlayerControls>();
-        playerControls.ConfigureCancel(menuManager);
+        playerScript.ResetExp();
     }
 
 

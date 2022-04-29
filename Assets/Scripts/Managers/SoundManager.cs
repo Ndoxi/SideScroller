@@ -9,15 +9,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource backgroundMusic;
     [SerializeField] private AudioSource soundEffects;
 
-    [Space]
-    [Header("Sound effects")]
+    [Space] [Header("Sound effects")]
     [SerializeField] AudioClip playerGetHit;
     [SerializeField] AudioClip shootingSound;
     [SerializeField] AudioClip enemyKilledSound;
-    [SerializeField] AudioClip powerUpPickup;
-
 
     public static SoundManager Instance { get; set; }
+
 
     private void Awake()
     {
@@ -41,7 +39,6 @@ public class SoundManager : MonoBehaviour
     {
         AmmoTemplate.PlayerShoot += PlayerShooting;
         PlayerScript.PlayerGetHit += PlayerGetHit;
-        ShootingSystem.PlayerPickUpPowerUp += PlayerPickupPowerUp;
         EnemyTemplate.enemyKilled += EnemyKilled;
     }
 
@@ -50,7 +47,6 @@ public class SoundManager : MonoBehaviour
     {
         AmmoTemplate.PlayerShoot -= PlayerShooting;
         PlayerScript.PlayerGetHit -= PlayerGetHit;
-        ShootingSystem.PlayerPickUpPowerUp -= PlayerPickupPowerUp;
         EnemyTemplate.enemyKilled -= EnemyKilled;
     }
 
@@ -78,7 +74,6 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerGetHit()
     {
-        //Debug.Log("GetHit");
         if (playerGetHit == null) { return; }
         soundEffects.PlayOneShot(playerGetHit);
     }
@@ -86,7 +81,6 @@ public class SoundManager : MonoBehaviour
 
     private void PlayerShooting()
     {
-        //Debug.Log("Shoot");
         if (shootingSound == null) { return; }
         soundEffects.PlayOneShot(shootingSound);
     }
@@ -94,16 +88,7 @@ public class SoundManager : MonoBehaviour
 
     private void EnemyKilled()
     {
-       //Debug.Log("EnemyKilled");
         if (enemyKilledSound == null) { return; }
         soundEffects.PlayOneShot(enemyKilledSound);
-    }
-
-
-    private void PlayerPickupPowerUp()
-    {
-        //Debug.Log("PowerUpPickedUp");
-        if (powerUpPickup == null) { return; }
-        soundEffects.PlayOneShot(powerUpPickup);
     }
 }

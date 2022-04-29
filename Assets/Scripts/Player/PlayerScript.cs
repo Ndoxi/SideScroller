@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerScript : MonoBehaviour, IHealth
 {
@@ -13,34 +14,86 @@ public class PlayerScript : MonoBehaviour, IHealth
     /// <summary>
     /// Player takes damage
     /// </summary>
-    public static event EventManager.TakeDamageAction PlayerTakeDamage;
+    public static event EventManager.SetPlayerHealthBarValueAction SetPlayerHealthBarValue;
+
+    /// <summary>
+    /// Player get exp
+    /// </summary>
+    public static event EventManager.SetPlayerExpBarValueAction SetPlayerExpBarValue;
 
     /// <summary>
     /// Triggers when player dies
     /// </summary>
     public static event EventManager.PlayerDeathAction PlayerDies;
 
+    [Header("Stats")]
     [SerializeField] private RocketStats rocketStats;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip getExpSound;
+    [SerializeField] private AudioClip levelUpSound;
+
+
     private Animation playerGetHitAnimation;
+
     private int maxHealth;
     private int curentHealth;
-    private bool isInvincible = false;
-    //private bool isDead = false;
 
+    private int expToNextLevel = 100;
+    private int curentExp = 0;
+
+    private bool isInvincible = false;
+    
 
     private void Awake()
     {
         playerGetHitAnimation = gameObject.GetComponent<Animation>();
         maxHealth = rocketStats.health;
         curentHealth = maxHealth;
+    }
 
+
+    private void OnEnable()
+    {
+        EnemyTemplate.GivePlayerExp += GetExp;
+    }
+
+
+    private void OnDisable()
+    {
+        EnemyTemplate.GivePlayerExp -= GetExp;
     }
 
 
     public void RestoreAllHealth()
     {
         curentHealth = maxHealth;
+        SetPlayerHealthBarValue?.Invoke(maxHealth);
+    }
+
+
+    public void ResetExp()
+    {
+        curentExp = 0;
+        SetPlayerExpBarValue?.Invoke(0);
+    }
+
+
+    public void GetExp(int expAmount)
+    { 
+        SoundManager.PlaySoundEffect(getExpSound); 
+        curentExp += expAmount;
+
+        if (curentExp >= expToNextLevel)
+        {
+            //LevelUp
+            RestoreAllHealth();
+            SoundManager.PlaySoundEffect(levelUpSound);
+
+            curentExp -= expToNextLevel;
+        }
+
+        SetPlayerExpBarValue?.Invoke(curentExp);
     }
 
 
@@ -78,9 +131,10 @@ public class PlayerScript : MonoBehaviour, IHealth
     {
         if (isInvincible) { return; }
 
-        PlayerGetHit();
-        PlayerTakeDamage(damage);
+        PlayerGetHit?.Invoke();
+
         curentHealth -= damage;
+        SetPlayerHealthBarValue?.Invoke(curentHealth);
 
         if (curentHealth <= 0) 
         { 

@@ -45,10 +45,7 @@ public class ShootAttack : Attack
     private GameObject GetRandomTurret()
     {
         int max = turrets.Count;
-
         int randomIndex = Random.Range(0, max);
-
-        Debug.Log($"Turret {randomIndex}");
 
         return turrets[randomIndex];
     }

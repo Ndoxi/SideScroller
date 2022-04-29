@@ -144,6 +144,8 @@ public class SpawnerScript : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(10);
+
         foreach (Wave enemyWave in enemiesWaveForLevel.EnemyWeves)
         {
             foreach (GameObject enemy in enemyWave.WaveEnemies)

@@ -8,12 +8,24 @@ using System;
 
 public class BossHealthBar : MonoBehaviour
 {
-    [Header("Healthbar text")]
-    [SerializeField] private TextMeshProUGUI healthBarText;
+    [Header("Elements")]
+    [SerializeField] private Slider bossHealthBarSlider;
 
 
-    public void SetHealthBarText(string text)
+    private void OnEnable()
     {
-        healthBarText.text = text;
+        BossScript.bossTakeDamageAction += SetBossHealthBarValue;
+    }
+
+
+    private void OnDisable()
+    {
+        BossScript.bossTakeDamageAction -= SetBossHealthBarValue;
+    }
+
+
+    private void SetBossHealthBarValue(int healthBarValue)
+    {
+        bossHealthBarSlider.value = healthBarValue;
     }
 }
