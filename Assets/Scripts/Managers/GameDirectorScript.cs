@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameDirectorScript : MonoBehaviour
 {
     [Header("Player")]
@@ -84,5 +85,21 @@ public class GameDirectorScript : MonoBehaviour
         {
             Destroy(enemy);
         }
+    }
+
+
+    public static void FinishLevel()
+    {
+        Instance.StartCoroutine(Instance.FinishLevelCoroutine());
+    }
+
+
+    IEnumerator FinishLevelCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        menuManager.ShowWinMessage();
+
+        yield return new WaitForSeconds(4f);
+        LoadSceneManager.LoadMainMenu();
     }
 }

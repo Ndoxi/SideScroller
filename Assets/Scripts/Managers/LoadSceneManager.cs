@@ -13,23 +13,19 @@ public class LoadSceneManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("Start game");
-
         sceneToLoadIndex = 2;
         SceneManager.LoadScene(1); //Show loading screen
     }
 
 
-    public void LoadMainMenu()
+    public static void LoadMainMenu()
     {
-        Debug.Log("Load Main Menu");
         SceneManager.LoadScene(0);
     }
 
 
     public void QuitGame()
     {
-        Debug.Log("Qiut game");
         Application.Quit();
     }
 }

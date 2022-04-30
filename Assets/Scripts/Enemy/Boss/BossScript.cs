@@ -52,6 +52,8 @@ public class BossScript : EnemyTemplate
     public override void Death()
     {
         SoundManager.PlaySoundEffect(deathSound);
+        GameDirectorScript.FinishLevel();
+
         Destroy(gameObject);
     }
 }

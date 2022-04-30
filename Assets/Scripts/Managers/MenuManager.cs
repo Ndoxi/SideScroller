@@ -14,6 +14,8 @@ public class MenuManager : MonoBehaviour
     [Header("Hint for player")]
     [SerializeField] private GameObject hintGO;
 
+    [Header("Win message")]
+    [SerializeField] private GameObject winMessageGO;
 
     private void Start()
     {
@@ -27,6 +29,13 @@ public class MenuManager : MonoBehaviour
         {
             CloseMenuAction?.Invoke();
         }
+    }
+
+
+    public void ShowWinMessage()
+    {
+        if (hintGO == null) { return; }
+        winMessageGO.SetActive(true);
     }
 
 
